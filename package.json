@@ -1,0 +1,24 @@
+{
+  "name": "lekkada-book-api",
+  "version": "1.0.0",
+  "description": "![image](https://github.com/shridhargovindaiah/lekkada-book-api/assets/20173538/22a9b69a-c7ab-41c4-9ffd-df305a7b21e0)\r Lekkada Book or Lekkada Pushtaka is Kannada word for Account Book.\r As the name suggests, this is a straightforward app that helps you to keep your spending (Lekka).",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx ts-node src/app.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "prisma": "^5.7.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.7.1",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.25.1",
+    "fastify-cli": "^5.9.0"
+  }
+}
