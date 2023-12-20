@@ -1,25 +1,30 @@
 import Fastify from 'fastify';
-
 import UserRoutes from "./routes/user.routes";
-
+import { auth, signin, signup } from './modules/auth';
 import dotenv from 'dotenv';
-import { AddressInfo } from 'net';
+import { sign } from 'crypto';
 dotenv.config();
 
 const fastify = Fastify({
     logger: true
-})
-//import routes
+});
 
-//connect DB
+fastify.decorate("verifyJWT", auth);
+
+fastify.post("/signin", signin);
+fastify.post("/signup", signup);
+
+// import routes
+fastify.register(UserRoutes, { 
+    prefix: "/api/v1/users",    
+ });
 
 //start the server
-fastify.register(UserRoutes, { prefix: "/api/v1/users" });
 const start = () => {
     try {
         fastify.listen(process.env.PORT || 3000, () => {
             const serverObject: any = fastify.server.address();
-            console.log(`Server is running at ${serverObject.port}`);
+            console.log(`Server is running at `);
         })
     } catch(err) {
         console.log("Failed:: ", err);
