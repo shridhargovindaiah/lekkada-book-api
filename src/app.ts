@@ -2,7 +2,6 @@ import Fastify from 'fastify';
 import UserRoutes from "./routes/user.routes";
 import { auth, signin, signup } from './modules/auth';
 import dotenv from 'dotenv';
-import { sign } from 'crypto';
 dotenv.config();
 
 const fastify = Fastify({
@@ -22,9 +21,13 @@ fastify.register(UserRoutes, {
 //start the server
 const start = () => {
     try {
-        fastify.listen(process.env.PORT || 3000, () => {
-            const serverObject: any = fastify.server.address();
-            console.log(`Server is running at `);
+        fastify.listen({
+            port: 5000
+        }, (err, address) => {
+            if(err) {
+                console.log("Somethig went wrong ", err);
+            }
+            console.log("Server is running on ", address);
         })
     } catch(err) {
         console.log("Failed:: ", err);

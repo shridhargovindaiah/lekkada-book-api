@@ -1,10 +1,15 @@
 
 import User from "../models/user.model";
+import { createPassword } from "../modules/auth";
 
 export const createUser = async (request: any, reply: any) => {
     try {
         const users = await User.create({
-            data: request.body
+            data: {
+                username: request.body.username,
+                email: request.body.email,
+                password: await createPassword(request.body.password)
+            }
         });
         reply.send({data: users});
     } catch(err) {
