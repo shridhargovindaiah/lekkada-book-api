@@ -36,17 +36,17 @@ export const createPassword = (password: string) => hash(password, 5);
 
 export const comparePassword = (password: string, hash: any) => compare(password, hash);
 
-export const signin = async (request: any, reply: any) => { 
+export const signin = async (request: any, reply: any) => {
+    const {username, email, password} = request.body;
     const user = await User.findUnique({
         where: {
-            ...(request.body.username ? {username: request.body.username} : {email: request.body.email,})
+            ...(username ? {username} : {email})
         }
     });
     if(!user) {
         reply.status(401).send({message: "User does not exit. Unauthorized"});
     }
-    const match = await comparePassword(request.body.password, user?.password);
-    console.log("Hari Om ", user, match);
+    const match = await comparePassword(password, user?.password);
 
     if(!match) {
         reply.status(401).send({message: "Username or Email and Password is not correct"});
@@ -61,11 +61,26 @@ export const signin = async (request: any, reply: any) => {
 
 export const signup = async (request: any, reply: any) => { 
     //Create User
+    const {
+        username,
+        email,
+        password,
+        firstName,
+        lastName,
+        bio
+    } = request.body;
     const user = await User.create({
         data: {
-            username: request.body.username,
-            email: request.body.email,
-            password: await createPassword(request.body.password)
+            username: username,
+            email: email,
+            password: await createPassword(password),
+            profile: {
+                create: {
+                    fname: firstName,
+                    lname: lastName,
+                    bio
+                }
+            }
         }
     });
 
