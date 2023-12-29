@@ -1,6 +1,7 @@
 import Fastify from 'fastify';
 import UserRoutes from "./routes/user.routes";
 import CategoryRoutes from "./routes/category.routes";
+import ExpenseRoutes from "./routes/expense.routes";
 import { auth, signin, signup } from './modules/auth';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -21,6 +22,10 @@ fastify.register(UserRoutes, {
 
 fastify.register(CategoryRoutes, {
     prefix: "/api/v1/category"
+});
+
+fastify.register(ExpenseRoutes, {
+    prefix: "/api/v1/expense"
 })
 
 //start the server
